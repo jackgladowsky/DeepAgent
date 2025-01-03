@@ -1,4 +1,5 @@
 from openai import OpenAI
+from ollama import chat, ChatResponse
 from .BaseLLM import BaseLLM, LLMResponse
 
 class OllamaLLM(BaseLLM):
@@ -21,3 +22,7 @@ class OllamaLLM(BaseLLM):
             usage=response.usage.model_dump(),   # Convert to dict
             finish_reason=response.choices[0].finish_reason
         )
+    
+    def run_ollama(self, messages: list[dict]) -> ChatResponse:
+        response = chat(model=self.llm_name, messages=messages)
+        return response
