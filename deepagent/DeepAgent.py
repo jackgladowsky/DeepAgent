@@ -1,6 +1,12 @@
 from llm.OpenRouterLLM import OpenRouterLLM
+from llm.OllamaLLM import OllamaLLM
 
-llm = OpenRouterLLM()
+llm1 = OpenRouterLLM()
 
-response = llm.run([{"role": "user", "content": "Hello! How are you?"}])
-print(response.completion)
+response1 = llm1.run([{"role": "user", "content": "Hello! How are you?"}])
+print(f"OpenRouterLLM: {response1.completion}")
+
+llm2 = OllamaLLM()
+
+response2 = llm2.run([{"role": "user", "content": "Hello! How are you?"}])
+print(f"OllamaLLM: {response2.completion}")
