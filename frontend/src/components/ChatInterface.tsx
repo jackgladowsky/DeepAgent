@@ -3,14 +3,53 @@ import ButtonUsage from './Button';
 import MultilineTextFields from './TextInput';
 import ChatDisplay from './ChatDisplay';
 
-export default function ChatInterface() {
-    const [messages, setMessages] = useState<string[]>([]);
-    const [inputText, setInputText] = useState('');
+interface Message {
+    role: 'user' | 'assistant';
+    content: string;
+}
 
-    const handleSendMessage = () => {
+export default function ChatInterface() {
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [inputText, setInputText] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSendMessage = async () => {
         if (inputText.trim()) {
-            setMessages([...messages, inputText]);
+            // Add user message
+            const userMessage: Message = { role: 'user', content: inputText };
+            setMessages(prev => [...prev, userMessage]);
             setInputText('');
+            setIsLoading(true);
+
+            try {
+                const response = await fetch('http://localhost:8001/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        messages: [...messages, userMessage],
+                        model: 'openrouter'
+                    }),
+                });
+
+                const data = await response.json();
+                
+                // Add AI response
+                setMessages(prev => [...prev, {
+                    role: 'assistant',
+                    content: data.completion
+                }]);
+            } catch (error) {
+                console.error('Error:', error);
+                // Optionally add error message to chat
+                setMessages(prev => [...prev, {
+                    role: 'assistant',
+                    content: 'Sorry, there was an error processing your request.'
+                }]);
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
@@ -22,7 +61,9 @@ export default function ChatInterface() {
                     value={inputText}
                     onChange={(text) => setInputText(text)}
                 />
-                <ButtonUsage onClick={handleSendMessage} />
+                <ButtonUsage 
+                    onClick={handleSendMessage}
+                />
             </div>
         </div>
     );

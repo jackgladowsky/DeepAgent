@@ -5,9 +5,10 @@ import TextField from '@mui/material/TextField';
 interface MultilineTextFieldsProps {
     value: string;
     onChange: (text: string) => void;
+    disabled?: boolean;
 }
 
-export default function MultilineTextFields({ value, onChange }: MultilineTextFieldsProps) {
+export default function MultilineTextFields({ value, onChange, disabled }: MultilineTextFieldsProps) {
     return (
         <Box
             component="form"
@@ -23,6 +24,7 @@ export default function MultilineTextFields({ value, onChange }: MultilineTextFi
                 maxRows={4}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
+                disabled={disabled}
                 sx={{
                     '& .MuiOutlinedInput-root': {
                         '&:hover fieldset': {
