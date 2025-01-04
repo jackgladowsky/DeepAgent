@@ -27,6 +27,9 @@ class BaseLLM:
         except:
             raise ValueError("OPENROUTER_API_KEY not found in environment variables")
 
-    def run(self, messages: list[dict]) -> LLMResponse:
+    def run(self, messages: list[dict], model: str) -> LLMResponse:
         raise NotImplementedError("LLM RUN method not implemented")
+    
+    def get_models(self) -> list[dict]:
+        raise NotImplementedError("LLM GET_MODELS method not implemented")
     

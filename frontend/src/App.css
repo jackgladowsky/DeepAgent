@@ -100,3 +100,29 @@
   min-width: 100px !important;
   background-color: #2196f3 !important;
 }
+
+/* Add these styles */
+.MuiSelect-select {
+    color: white !important;
+}
+
+.MuiFormLabel-root {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.MuiSelect-icon {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.MuiPaper-root {
+    background-color: #3b4049 !important;
+    color: white !important;
+}
+
+.MuiMenuItem-root {
+    color: white !important;
+}
+
+.MuiMenuItem-root:hover {
+    background-color: rgba(33, 150, 243, 0.1) !important;
+}
